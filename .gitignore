@@ -6,8 +6,8 @@ client/node_modules/
 .env
 client/.env
 
-# Uploaded product images (too large for git)
-uploads/
+# Uploaded product images — push them so friends get the same data
+# uploads/
 
 # Build output
 client/dist/
