@@ -1,145 +1,83 @@
 # 🍔 Tap & Grab — Food Ordering System
 
-A full-stack food ordering web application converted from a legacy PHP/MySQL project into a modern **React + Node.js + MySQL** system.
+A full-stack food ordering web application built with **React + Node.js + MySQL**.
 
 ---
 
-## Tech Stack
+## 📦 What Your Friend Needs to Install First
 
-| Layer | Technology |
-|---|---|
-| Frontend | React 19, Vite, Tailwind CSS |
-| Backend | Node.js, Express.js |
-| Database | MySQL (via XAMPP) |
-| ORM | Sequelize |
-| Auth | JWT (JSON Web Tokens) |
-| Real-time | Socket.io |
-| File Upload | Multer |
+### Step 1 — Install Node.js
+1. Go to → https://nodejs.org
+2. Download **LTS version** (the green button)
+3. Run the installer → keep all defaults → click Next until Finish
+4. Verify: open Command Prompt and type:
+   ```
+   node --version
+   npm --version
+   ```
+   Both should show version numbers.
 
----
-
-## Project Structure
-
-```
-Food-service/
-├── server.js               # Express + Socket.io entry point
-├── .env                    # Environment variables
-├── config/
-│   └── db.js               # Sequelize MySQL connection
-├── models/                 # Sequelize models
-│   ├── User.js
-│   ├── Product.js
-│   ├── Cart.js
-│   ├── Order.js
-│   ├── Message.js
-│   ├── Review.js
-│   ├── Favorite.js
-│   ├── Category.js
-│   ├── ChatSession.js
-│   ├── ChatMessage.js
-│   └── index.js            # Associations
-├── controllers/            # Route handlers
-├── routes/                 # Express routers
-├── middlewares/            # Auth, upload
-├── services/               # Business logic
-├── scripts/
-│   ├── seed.js             # Creates admin user
-│   └── seedMenu.js         # Seeds 32 menu items with images
-├── uploads/                # Uploaded product images
-└── client/                 # React frontend (Vite)
-    ├── src/
-    │   ├── pages/
-    │   │   ├── user/       # Home, Menu, Cart, Checkout, Orders, Profile...
-    │   │   └── admin/      # Dashboard, Products, Orders, Users, Support...
-    │   ├── components/
-    │   │   ├── common/     # Navbar, Footer, ProductCard, SupportChat...
-    │   │   └── admin/      # AdminLayout
-    │   ├── context/        # AuthContext, CartContext
-    │   ├── hooks/          # useChat, useDebounce, usePolling, useFormValidation
-    │   ├── services/       # API call wrappers
-    │   └── utils/          # validators.js
-    └── .env                # Frontend env vars
-```
+### Step 2 — Install XAMPP (for MySQL)
+1. Go to → https://www.apachefriends.org
+2. Download **XAMPP for Windows**
+3. Run the installer → keep all defaults
+4. After install, open **XAMPP Control Panel**
+5. Click **Start** next to **MySQL** (you only need MySQL, not Apache)
 
 ---
 
-## Prerequisites
+## 🚀 Project Setup
 
-- [Node.js](https://nodejs.org/) v18+
-- [XAMPP](https://www.apachefriends.org/) (for MySQL)
-
----
-
-## Setup & Installation
-
-### 1. Start MySQL
-Open **XAMPP Control Panel** → click **Start** next to **MySQL**
-
-### 2. Create the database
+### Step 3 — Clone the project
+Open Command Prompt or PowerShell:
 ```bash
-# Using XAMPP MySQL CLI
-C:\xampp\mysql\bin\mysql.exe -u root -e "CREATE DATABASE IF NOT EXISTS food_service_db;"
+git clone https://github.com/aayushmaharjan124-sys/food-service-105.git
+cd food-service-105
 ```
 
-### 3. Install backend dependencies
+> Don't have Git? Download from https://git-scm.com and install it first.
+
+### Step 4 — Install dependencies
 ```bash
-cd C:\Food-service
+# Backend dependencies
 npm install
-```
 
-### 4. Install frontend dependencies
-```bash
-cd C:\Food-service\client
+# Frontend dependencies
+cd client
 npm install
+cd ..
 ```
 
-### 5. Configure environment
-Edit `C:\Food-service\.env`:
-```env
-PORT=5001
-DB_HOST=localhost
-DB_PORT=3306
-DB_NAME=food_service_db
-DB_USER=root
-DB_PASS=
-JWT_SECRET=change_this_to_a_strong_random_secret
-JWT_EXPIRE=7d
-NODE_ENV=development
-```
-
-Edit `C:\Food-service\client\.env`:
-```env
-VITE_API_URL=http://localhost:5001/api
-VITE_UPLOADS_URL=http://localhost:5001/uploads
-VITE_SOCKET_URL=http://localhost:5001
-```
-
-### 6. Seed the database
+### Step 5 — Create environment files
 ```bash
-# From C:\Food-service
+# Copy the example files
+copy .env.example .env
+copy client\.env.example client\.env
+```
 
-# Create admin user
-node scripts/seed.js
+### Step 6 — Create and import the database
+```bash
+# Create the database
+C:\xampp\mysql\bin\mysql.exe -u root -e "CREATE DATABASE food_service_db;"
 
-# Seed 32 menu items with images (optional but recommended)
-node scripts/seedMenu.js
+# Import all data (products, categories, users, orders, everything)
+C:\xampp\mysql\bin\mysql.exe -u root food_service_db < food_service_db.sql
 ```
 
 ---
 
-## Running the App
+## ▶️ Running the App
 
-Open **two terminals**:
+Make sure **XAMPP MySQL is running** first, then open **two terminals**:
 
 **Terminal 1 — Backend:**
 ```bash
-cd C:\Food-service
 npm run dev
 ```
 
 **Terminal 2 — Frontend:**
 ```bash
-cd C:\Food-service\client
+cd client
 npm run dev
 ```
 
@@ -152,84 +90,91 @@ Then open your browser:
 
 ---
 
-## Default Admin Credentials
+## 🔑 Login Credentials
 
+**Admin:**
 ```
 Email:    admin@foodservice.com
 Password: admin123
 ```
 
-> ⚠️ Change these after first login.
-
----
-
-## Features
-
-### User
-- Register / Login with JWT auth
-- Browse menu by category
-- Smart search with debounced autocomplete
-- Add to cart, update quantities
-- Checkout (Cash on Delivery)
-- Order tracking with live status progress bar
-- Order history
-- Favorites / Wishlist
-- Product reviews & ratings
-- Profile management (name, email, phone, address, password)
-- Live support chat (Socket.io)
-
-### Admin
-- Dashboard (revenue, orders, top products, recent activity)
-- Product management (CRUD + image upload)
-- Category management (CRUD)
-- Order management (status updates, delete)
-- User management (view, delete)
-- Contact messages with reply
-- Live support chat portal (see all active sessions, reply in real-time)
-
-### Smart Features
-- **Top-selling algorithm:** `score = (totalOrders × 0.7) + (recentOrders × 1.3)`
-- **Delivery estimation:** `Prep Time + (Active Orders × 2 min)`
-- **Recommendations:** based on user's most ordered category
-- **Real-time support chat** with 1-minute inactivity auto-close
-
----
-
-## API Overview
-
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/auth/register` | Register user |
-| POST | `/api/auth/login` | User login |
-| POST | `/api/auth/admin/login` | Admin login |
-| GET | `/api/products` | List products |
-| GET | `/api/products/search?q=` | Search products |
-| GET | `/api/products/top-selling` | Top selling items |
-| GET | `/api/categories` | List categories |
-| GET/POST/DELETE | `/api/cart` | Cart operations |
-| POST | `/api/orders` | Place order |
-| GET | `/api/orders` | My orders |
-| GET | `/api/admin/dashboard` | Admin stats |
-| GET | `/api/admin/orders` | All orders |
-| GET | `/api/admin/users` | All users |
-
----
-
-## Scripts
-
-```bash
-npm run dev        # Start backend with nodemon
-npm run start      # Start backend (production)
-npm run seed       # Create admin user
-node scripts/seedMenu.js  # Seed menu items
+**Test User:**
+```
+Email:    test@gmail.com
+Password: 123
 ```
 
 ---
 
-## Notes
+## 🛠️ Tech Stack
 
-- Product images are stored in `/uploads/` and served statically
-- The legacy PHP project is available at `./food` (symlink) for reference
-- Socket.io handles real-time support chat — both user widget and admin portal
-- All passwords are hashed with bcryptjs (12 rounds)
-- Rate limiting: 20 auth requests / 15 min, 200 general requests / min
+| Layer | Technology |
+|---|---|
+| Frontend | React 19, Vite, Tailwind CSS |
+| Backend | Node.js, Express.js |
+| Database | MySQL (XAMPP) |
+| ORM | Sequelize |
+| Auth | JWT |
+| Real-time | Socket.io |
+
+---
+
+## ✨ Features
+
+**User**
+- Register / Login
+- Browse menu by category
+- Search with autocomplete
+- Cart & Checkout (Cash on Delivery)
+- Order tracking with live status
+- Favorites, Reviews, Profile
+- Live support chat
+
+**Admin**
+- Dashboard with stats & revenue
+- Product, Category, Order, User management
+- Contact message replies
+- Live support chat portal
+
+---
+
+## 📁 Project Structure
+
+```
+food-service-105/
+├── server.js            # Backend entry point
+├── .env.example         # Copy this to .env
+├── food_service_db.sql  # Database dump (import this)
+├── uploads/             # Product images
+├── config/              # Database connection
+├── models/              # Database models
+├── controllers/         # Route logic
+├── routes/              # API routes
+├── middlewares/         # Auth, upload
+├── services/            # Business logic
+├── scripts/             # Seed scripts
+└── client/              # React frontend
+    ├── .env.example     # Copy this to client/.env
+    └── src/
+        ├── pages/       # All pages (user + admin)
+        ├── components/  # Reusable components
+        ├── context/     # Auth, Cart state
+        ├── hooks/       # Custom hooks
+        └── services/    # API calls
+```
+
+---
+
+## ❓ Troubleshooting
+
+**"DB connection error"**
+→ MySQL is not running. Open XAMPP Control Panel and start MySQL.
+
+**"Port 5001 already in use"**
+→ Run `taskkill /F /IM node.exe` in terminal, then restart.
+
+**"npm is not recognized"**
+→ Node.js is not installed. Go back to Step 1.
+
+**Images not showing**
+→ Make sure backend is running on port 5001.
