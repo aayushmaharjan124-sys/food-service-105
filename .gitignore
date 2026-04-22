@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+client/node_modules/
+
+# Environment variables — never push these
+.env
+client/.env
+
+# Uploaded product images (too large for git)
+uploads/
+
+# Build output
+client/dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
